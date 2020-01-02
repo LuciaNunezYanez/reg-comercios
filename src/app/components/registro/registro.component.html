@@ -1,0 +1,326 @@
+<div class="container-fluid">
+
+    <form novalidate="" (ngSubmit)="registrar(forma)" #forma="ngForm">
+        <div class="row justify-content-around pt-4 pb-4">
+
+            <div class="card col-md-5 col-sm-12" style="width: 18rem;">
+                <div class="card-body">
+                    <!-- <form action=""> -->
+                    <div class="row justify-content-between">
+                        <div class="col align-content-center">
+                            <h4 class="h4 text-success text-center"> Datos del comercio</h4>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Nombre Comercial</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" name="nombreComercio" [ngModel]="usuario.nombreUsuario" required #nombreUsuario="ngModel" [ngClass]="{'is-invalid': (nombreUsuario.touched && (nombreUsuario.errors?.required))}">
+                            <div *ngIf="nombreUsuario.errors?.required" class="invalid-feedback">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Razón Social</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" name="razonSocial" ngModel required #razonSocial="ngModel" [ngClass]="{'is-invalid': (razonSocial.touched && (razonSocial.errors?.required)) }">
+                            <div *ngIf="razonSocial.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Giro</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" name="giro" ngModel required #giro="ngModel" [ngClass]="{'is-invalid': (giro.touched && (giro.errors?.required)) }">
+                            <div *ngIf="giro.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Teléfono fijo </label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" name="telefonoFijo" ngModel minlength="10" maxlength="10" [ngClass]="{'is-invalid': (telefonoFijo.touched && (telefonoFijo.errors?.minlength || telefonoFijo.errors?.maxlength)) }" #telefonoFijo="ngModel">
+                            <div *ngIf="telefonoFijo.errors?.minlength" class="invalid-feedback">
+                                Al menos 10 dígitos
+                            </div>
+                            <div *ngIf="telefonoFijo.errors?.maxlength" class="invalid-feedback">
+                                Máximo 10 dígitos
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Núm empleados</label>
+                        <div class="col-8">
+                            <input class="form-control" type="number" name="numEmpleados" ngModel>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Folio Comercio</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" name="folioComercio" ngModel>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-between align-content-center">
+                        <div class="col">
+                            <h4 class="h4 text-success text-center"> Dirección</h4>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Calle</label>
+                        <div class="col-8">
+                            <input class="form-control" [ngClass]="{'is-invalid': (calle.touched && (calle.errors?.required)) }" type="text" name="calle" ngModel required #calle="ngModel">
+                            <div *ngIf="calle.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Número</label>
+                        <div class="col-8">
+                            <input class="form-control" [ngClass]="{'is-invalid': (numero.touched && (numero.errors?.required)) }" type="text" name="numero" ngModel required #numero="ngModel">
+                            <div *ngIf="numero.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Colónia</label>
+                        <div class="col-8">
+                            <input class="form-control" [ngClass]="{'is-invalid': (colonia.touched && (colonia.errors?.required)) }" type="text" name="colonia" ngModel required #colonia="ngModel">
+                            <div *ngIf="colonia.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Código Postal</label>
+                        <div class="col-8">
+                            <input class="form-control" [ngClass]="{'is-invalid': (cp.touched && (cp.errors?.required || cp.errors?.minlength || cp.errors?.maxlength )) }" type="text" name="cp" ngModel required minlength="5" maxlength="5" #cp="ngModel">
+                            <div *ngIf="cp.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div>
+                            <div *ngIf="cp.errors?.minlength" class="invalid-feedback">
+                                Al menos 5 dígitos
+                            </div>
+                            <div *ngIf="cp.errors?.maxlength" class="invalid-feedback">
+                                Máximo 5 dígitos
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Entre Calle</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" name="entreCalle1" ngModel>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Y Calle</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" name="entreCalle2" ngModel>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Fachada</label>
+                        <div class="col-8">
+                            <input class="form-control" [ngClass]="{'is-invalid': (fachada.touched && (fachada.errors?.required)) }" type="text" name="fachada" ngModel required #fachada="ngModel">
+                            <div *ngIf="fachada.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Estado</label>
+                        <div class="col-8">
+                            <select class="form-control my-1" name="estado"> 
+                                <option value="0">Seleccione</option>
+                                <!-- <option *ngFor="let clasif of clasificacion"
+                                        value="{{clasif.id_clasificacion}}"> 
+                                        {{clasif.clasificacion}}</option> -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Municipio</label>
+                        <div class="col-8">
+                            <select class="form-control my-1" name="municipio"> 
+                                <option value="0">Seleccione</option>
+                                <!-- <option *ngFor="let clasif of clasificacion"
+                                        value="{{clasif.id_clasificacion}}"> 
+                                        {{clasif.clasificacion}}</option> -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Localidad</label>
+                        <div class="col-8">
+                            <select class="form-control my-1" name="localidad"> 
+                                <option value="0">Seleccione</option>
+                                <!-- <option *ngFor="let clasif of clasificacion"
+                                        value="{{clasif.id_clasificacion}}"> 
+                                        {{clasif.clasificacion}}</option> -->
+                            </select>
+                        </div>
+                    </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+            <div class="card col-md-5 col-sm-12" style="width: 18rem;">
+                <div class="card-body">
+                    <!-- <form action=""> -->
+                    <div class="row justify-content-between">
+                        <div class="col justify-content-between">
+                            <h4 class="h4 text-success text-center"> Datos del usuario</h4>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Nombre(s)</label>
+                        <div class="col-8">
+                            <input [ngClass]="{'is-invalid': (nombreUsuario.touched && (nombreUsuario.errors?.required)) }" class="form-control" type="text" name="nombreUsuario" ngModel required #nombreUsuario="ngModel">
+                            <div *ngIf="nombreUsuario.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Apellido Paterno</label>
+                        <div class="col-8">
+                            <input [ngClass]="{'is-invalid': (apellidoPaterno.touched && (apellidoPaterno.errors?.required)) }" class="form-control" type="text" name="apellidoPaterno" ngModel required #apellidoPaterno="ngModel">
+                            <div *ngIf="apellidoPaterno.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Apellido Materno</label>
+                        <div class="col-8">
+                            <input [ngClass]="{'is-invalid': (apellidoMaterno.touched && (apellidoMaterno.errors?.required)) }" class="form-control" type="text" name="apellidoMaterno" ngModel required #apellidoMaterno="ngModel">
+                            <div *ngIf="apellidoMaterno.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Sexo</label>
+                        <div class="col-8">
+                            <select class="form-control my-1" name="sexo"> 
+                                <option value="0">Seleccione</option>
+                                <!-- <option *ngFor="let clasif of clasificacion"
+                                        value="{{clasif.id_clasificacion}}"> 
+                                        {{clasif.clasificacion}}</option> -->
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Fecha Nacimiento</label>
+                        <div class="col-8">
+                            <input class="form-control " [ngClass]="{'is-invalid': (fechaNac.touched && (fechaNac.errors?.pattern || fechaNac.errors?.required)) }" type="text" placeholder="DD/MM/YYYY" name="fechaNacimiento" minlength="10" maxlength="10" ngModel #fechaNac="ngModel"
+                                required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$">
+                            <div *ngIf="fechaNac.errors?.required && fechaNac.touched" class="invalid-feedback">
+                                Este campo es requerido
+                            </div>
+                            <div *ngIf="fechaNac.errors?.pattern && fechaNac.touched" class="invalid-feedback">
+                                El formato es DD/MM/YYYY
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FORMATO PARA DISEÑO CON ERRORES
+                        <input class="form-control " [ngClass]="{'is-invalid': (fechaNac.touched && (fechaNac.errors?.required)) }" 
+                                                                 ngModel #fechaNac="ngModel">
+                            <div *ngIf="fechaNac.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div> -->
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Teléfono móvil</label>
+                        <div class="col-8">
+                            <input class="form-control" [ngClass]="{'is-invalid': (telefonoMovil.touched && (telefonoMovil.errors?.required || telefonoMovil.errors?.maxlength || telefonoMovil.errors?.minlength)) }" type="text" name="telefonoMovil" ngModel minlength="10" maxlength="10"
+                                required #telefonoMovil="ngModel">
+                            <div *ngIf="telefonoMovil.errors?.required" class="invalid-feedback">
+                                {{campoRequerido}}
+                            </div>
+                            <div *ngIf="telefonoMovil.errors?.minlength" class="invalid-feedback">
+                                Al menos 10 dígitos
+                            </div>
+                            <div *ngIf="telefonoMovil.errors?.maxlength" class="invalid-feedback">
+                                Máximo 10 dígitos
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Padecimientos</label>
+                        <div class="col-8">
+                            <textarea class="form-control" cols="30" rows="3" name="padecimientos" ngModel></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Alergias</label>
+                        <div class="col-8">
+                            <textarea class="form-control" name="" cols="30" rows="3" name="alergias" ngModel></textarea>
+                            <!-- <input class="form-control" type="text"> -->
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Tipo de Sangre</label>
+                        <div class="col-8">
+                            <input class="form-control" type="text" name="tipoSangre" ngModel>
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-between">
+                        <label class="col-4 col-form-label">Tipo de Usuario</label>
+                        <div class="col-8">
+                            <select class="form-control my-1" name="tipoUsuario"> 
+                                <option value="0">Seleccione</option>
+                                <!-- <option *ngFor="let clasif of clasificacion"
+                                        value="{{clasif.id_clasificacion}}"> 
+                                        {{clasif.clasificacion}}</option> -->
+                            </select>
+                        </div>
+                    </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-around mt-4 mb-4">
+            <div class="card col-md-11 col-sm-12 mr-0" style="width: 18rem;">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <div class="col justify-content-between">
+                            <h4 class="h4 text-success text-center"> Geolocalización</h4>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-1 col-sm-12 col-form-label">Latitud</label>
+                        <div class="col-md-2 col-sm-12">
+                            <input class="form-control" type="text" name="latitud" disabled value="" ngModel required>
+                        </div>
+                        <label class="col-md-1 col-sm-12 col-form-label">Longitud</label>
+                        <div class="col-md-2 col-sm-12">
+                            <input class="form-control" type="text" name="longitud" disabled value="" ngModel required>
+                        </div>
+                    </div>
+
+                    <div class="mapa">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2502.654313728046!2d-104.65675913318806!3d24.06642102622932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x869bb620c91b0d71%3A0x8f6d9ce204c9ee63!2sC-5%20Centro%20de%20Coordinaci%C3%B3n%20y%20C%C3%A1maras!5e0!3m2!1ses-419!2smx!4v1572143868247!5m2!1ses-419!2smx"
+                            width="100%" height="90%" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                    </div>
+
+                    <div class="row text-center">
+                        <div class="col-12 align-content">
+                            <button class="btn btn-success btn-lg" type="submit"> Finalizar registro</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>

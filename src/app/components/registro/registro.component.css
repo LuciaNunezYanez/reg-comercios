@@ -1,0 +1,7 @@
+.mapa {
+    height: 600px;
+}
+
+.ng-invalid.ng-touched:not(form) {
+    border: 1px solid red;
+}
