@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registro',
@@ -117,6 +118,7 @@ export class RegistroComponent implements OnInit {
     },
   ];
 
+  // 
   filtro_municipios = [];
   filtro_localidades = [];
 
@@ -124,8 +126,9 @@ export class RegistroComponent implements OnInit {
   selectedMunicipios = 0;
   selectedLocalidades = 0;
 
+  // Informaciòn utilizada por el mapa
   latitud = 0;
-  longitud = 0;
+  longitud = 0 ;
 
   constructor() { }
 
@@ -134,13 +137,45 @@ export class RegistroComponent implements OnInit {
 
   registrar(forma: NgForm){
     // console.log(forma);
-    console.log(forma.valid);
+    if( this.selectedLocalidades === 0){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Ingrese la informacion de Estado, Municipio y Localidad por favor'
+      });
+      return;
+    }
+    if(this.valorSexo === 'S'){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Seleccione sexo por favor'
+      });
+      return;
+    }
+    if(!forma.valid){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Complete todos los datos por favor'
+      });
+      return;
+    }
 
     if(forma.valid && this.selectedLocalidades!=0 && this.valorSexo!= 'S'){
-      console.log('Formulario valido');
-    } else {
-      console.log('Formulario invalido');
-    }
+      Swal.fire({
+        icon: 'success',
+        title: 'Éxito',
+        text: 'Comercio registrado correctamente'
+      });
+    } 
+
+  }
+
+  agregarMarcador(evento){
+    this.latitud = evento.coords.lat;
+    this.longitud = evento.coords.lng;
+    console.log(evento.coords);
 
   }
 

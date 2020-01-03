@@ -1,7 +1,11 @@
 .mapa {
-    height: 600px;
+    height: 580px;
 }
 
 .ng-invalid.ng-touched:not(form) {
     border: 1px solid red;
+}
+
+agm-map {
+    height: 600px;
 }
