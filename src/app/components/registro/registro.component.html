@@ -12,16 +12,17 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Nombre Comercial</label>
+                        <label class="col-4 col-form-label ">Nombre Comercio<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <input class="form-control" type="text" name="nombreComercio" [ngModel]="usuario.nombreUsuario" required #nombreUsuario="ngModel" [ngClass]="{'is-invalid': (nombreUsuario.touched && (nombreUsuario.errors?.required))}">
+                            <input class="form-control" type="text" name="nombreComercio" [(ngModel)]="usuario.nombreUsuario" required #nombreUsuario="ngModel" [ngClass]="{'is-invalid': 
+                                (nombreUsuario.touched && (nombreUsuario.errors?.required))}">
                             <div *ngIf="nombreUsuario.errors?.required" class="invalid-feedback">
-                                Este campo es requerido
+                                {{campoRequerido}}
                             </div>
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Razón Social</label>
+                        <label class="col-4 col-form-label">Razón Social<span class="text-danger">*</span></label>
                         <div class="col-8">
                             <input class="form-control" type="text" name="razonSocial" ngModel required #razonSocial="ngModel" [ngClass]="{'is-invalid': (razonSocial.touched && (razonSocial.errors?.required)) }">
                             <div *ngIf="razonSocial.errors?.required" class="invalid-feedback">
@@ -30,7 +31,7 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Giro</label>
+                        <label class="col-4 col-form-label">Giro<span class="text-danger">*</span> </label>
                         <div class="col-8">
                             <input class="form-control" type="text" name="giro" ngModel required #giro="ngModel" [ngClass]="{'is-invalid': (giro.touched && (giro.errors?.required)) }">
                             <div *ngIf="giro.errors?.required" class="invalid-feedback">
@@ -69,7 +70,7 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Calle</label>
+                        <label class="col-4 col-form-label">Calle<span class="text-danger">*</span></label>
                         <div class="col-8">
                             <input class="form-control" [ngClass]="{'is-invalid': (calle.touched && (calle.errors?.required)) }" type="text" name="calle" ngModel required #calle="ngModel">
                             <div *ngIf="calle.errors?.required" class="invalid-feedback">
@@ -78,7 +79,7 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Número</label>
+                        <label class="col-4 col-form-label">Número<span class="text-danger">*</span></label>
                         <div class="col-8">
                             <input class="form-control" [ngClass]="{'is-invalid': (numero.touched && (numero.errors?.required)) }" type="text" name="numero" ngModel required #numero="ngModel">
                             <div *ngIf="numero.errors?.required" class="invalid-feedback">
@@ -88,7 +89,7 @@
                     </div>
 
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Colónia</label>
+                        <label class="col-4 col-form-label">Colónia<span class="text-danger">*</span></label>
                         <div class="col-8">
                             <input class="form-control" [ngClass]="{'is-invalid': (colonia.touched && (colonia.errors?.required)) }" type="text" name="colonia" ngModel required #colonia="ngModel">
                             <div *ngIf="colonia.errors?.required" class="invalid-feedback">
@@ -97,7 +98,7 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Código Postal</label>
+                        <label class="col-4 col-form-label">Código Postal<span class="text-danger">*</span></label>
                         <div class="col-8">
                             <input class="form-control" [ngClass]="{'is-invalid': (cp.touched && (cp.errors?.required || cp.errors?.minlength || cp.errors?.maxlength )) }" type="text" name="cp" ngModel required minlength="5" maxlength="5" #cp="ngModel">
                             <div *ngIf="cp.errors?.required" class="invalid-feedback">
@@ -124,7 +125,7 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Fachada</label>
+                        <label class="col-4 col-form-label">Fachada<span class="text-danger">*</span></label>
                         <div class="col-8">
                             <input class="form-control" [ngClass]="{'is-invalid': (fachada.touched && (fachada.errors?.required)) }" type="text" name="fachada" ngModel required #fachada="ngModel">
                             <div *ngIf="fachada.errors?.required" class="invalid-feedback">
@@ -133,36 +134,48 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Estado</label>
+                        <label class="col-4 col-form-label">Estado<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <select class="form-control my-1" name="estado"> 
-                                <option value="0">Seleccione</option>
-                                <!-- <option *ngFor="let clasif of clasificacion"
-                                        value="{{clasif.id_clasificacion}}"> 
-                                        {{clasif.clasificacion}}</option> -->
+                            <select *ngIf="estado" [(ngModel)]="selectedEstados" (change)="onSelectEstado($event.target.value)" class="form-control my-1" name="estado" required> 
+                                    <option value="0">Seleccione</option>
+                                    <option *ngFor="let est of estado"
+                                        value="{{est.id_estados}}">
+                                        {{est.nombre_estado}}
+                                    </option>
                             </select>
+                            <div *ngIf="forma.control.value.estado === '0' && forma.controls.estado.untouched === false">
+                                <small class="text-danger">{{campoRequerido}}</small>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Municipio</label>
+                        <label class="col-4 col-form-label">Municipio<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <select class="form-control my-1" name="municipio"> 
+                            <select *ngIf="filtro_municipios" [(ngModel)]="selectedMunicipios" (change)="onSelectMunicipio($event.target.value)" class="form-control my-1" name="municipio"> 
                                 <option value="0">Seleccione</option>
-                                <!-- <option *ngFor="let clasif of clasificacion"
-                                        value="{{clasif.id_clasificacion}}"> 
-                                        {{clasif.clasificacion}}</option> -->
+                                <option *ngFor="let mun of filtro_municipios"
+                                    value="{{mun.id_municipios}}">
+                                    {{mun.nombre_municipio}}
+                                </option>
                             </select>
+                            <div *ngIf="forma.control.value.municipio === '0' && forma.controls.municipio.untouched === false">
+                                <small class="text-danger">{{campoRequerido}}</small>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Localidad</label>
+                        <label class="col-4 col-form-label">Localidad<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <select class="form-control my-1" name="localidad"> 
+                            <select *ngIf="filtro_localidades" [(ngModel)]="selectedLocalidades" (change)="onSelectLocalidad($event.target.value)" class="form-control my-1" name="localidad"> 
                                 <option value="0">Seleccione</option>
-                                <!-- <option *ngFor="let clasif of clasificacion"
-                                        value="{{clasif.id_clasificacion}}"> 
-                                        {{clasif.clasificacion}}</option> -->
+                                <option *ngFor="let loc of filtro_localidades"
+                                    value="{{loc.id_localidades}}">
+                                    {{loc.nombre_localidad}}
+                                </option>
                             </select>
+                            <div *ngIf="forma.control.value.localidad === '0' && forma.controls.localidad.untouched === false">
+                                <small class="text-danger">{{campoRequerido}}</small>
+                            </div>
                         </div>
                     </div>
                     <!-- </form> -->
@@ -177,7 +190,7 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Nombre(s)</label>
+                        <label class="col-4 col-form-label">Nombre(s)<span class="text-danger">*</span></label>
                         <div class="col-8">
                             <input [ngClass]="{'is-invalid': (nombreUsuario.touched && (nombreUsuario.errors?.required)) }" class="form-control" type="text" name="nombreUsuario" ngModel required #nombreUsuario="ngModel">
                             <div *ngIf="nombreUsuario.errors?.required" class="invalid-feedback">
@@ -186,7 +199,7 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Apellido Paterno</label>
+                        <label class="col-4 col-form-label">Apellido Paterno<span class="text-danger">*</span></label>
                         <div class="col-8">
                             <input [ngClass]="{'is-invalid': (apellidoPaterno.touched && (apellidoPaterno.errors?.required)) }" class="form-control" type="text" name="apellidoPaterno" ngModel required #apellidoPaterno="ngModel">
                             <div *ngIf="apellidoPaterno.errors?.required" class="invalid-feedback">
@@ -195,7 +208,7 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Apellido Materno</label>
+                        <label class="col-4 col-form-label">Apellido Materno<span class="text-danger">*</span></label>
                         <div class="col-8">
                             <input [ngClass]="{'is-invalid': (apellidoMaterno.touched && (apellidoMaterno.errors?.required)) }" class="form-control" type="text" name="apellidoMaterno" ngModel required #apellidoMaterno="ngModel">
                             <div *ngIf="apellidoMaterno.errors?.required" class="invalid-feedback">
@@ -204,20 +217,23 @@
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Sexo</label>
+                        <label class="col-4 col-form-label">Sexo<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <select class="form-control my-1" name="sexo"> 
+                            <select *ngIf="sexos" [(ngModel)]="selectedSexo" (change)="onSelectSexo($event.target.value)" class="form-control my-1" name="sexo"> 
                                 <option value="0">Seleccione</option>
-                                <!-- <option *ngFor="let clasif of clasificacion"
-                                        value="{{clasif.id_clasificacion}}"> 
-                                        {{clasif.clasificacion}}</option> -->
+                                <option *ngFor="let sexo of sexos"
+                                    value="{{sexo.id}}">
+                                    {{sexo.sexo}}
+                                </option>
                             </select>
+
+
                         </div>
                     </div>
 
 
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Fecha Nacimiento</label>
+                        <label class="col-4 col-form-label">Fecha Nacimiento<span class="text-danger">*</span></label>
                         <div class="col-8">
                             <input class="form-control " [ngClass]="{'is-invalid': (fechaNac.touched && (fechaNac.errors?.pattern || fechaNac.errors?.required)) }" type="text" placeholder="DD/MM/YYYY" name="fechaNacimiento" minlength="10" maxlength="10" ngModel #fechaNac="ngModel"
                                 required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$">
@@ -237,7 +253,7 @@
                                 {{campoRequerido}}
                             </div> -->
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Teléfono móvil</label>
+                        <label class="col-4 col-form-label">Teléfono móvil<span class="text-danger">*</span></label>
                         <div class="col-8">
                             <input class="form-control" [ngClass]="{'is-invalid': (telefonoMovil.touched && (telefonoMovil.errors?.required || telefonoMovil.errors?.maxlength || telefonoMovil.errors?.minlength)) }" type="text" name="telefonoMovil" ngModel minlength="10" maxlength="10"
                                 required #telefonoMovil="ngModel">
@@ -272,17 +288,6 @@
                             <input class="form-control" type="text" name="tipoSangre" ngModel>
                         </div>
                     </div>
-                    <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Tipo de Usuario</label>
-                        <div class="col-8">
-                            <select class="form-control my-1" name="tipoUsuario"> 
-                                <option value="0">Seleccione</option>
-                                <!-- <option *ngFor="let clasif of clasificacion"
-                                        value="{{clasif.id_clasificacion}}"> 
-                                        {{clasif.clasificacion}}</option> -->
-                            </select>
-                        </div>
-                    </div>
                     <!-- </form> -->
                 </div>
             </div>
@@ -299,16 +304,16 @@
                     <div class="form-group row">
                         <label class="col-md-1 col-sm-12 col-form-label">Latitud</label>
                         <div class="col-md-2 col-sm-12">
-                            <input class="form-control" type="text" name="latitud" disabled value="" ngModel required>
+                            <input class="form-control" type="text" name="latitud" disabled [(ngModel)]="latitud" required>
                         </div>
                         <label class="col-md-1 col-sm-12 col-form-label">Longitud</label>
                         <div class="col-md-2 col-sm-12">
-                            <input class="form-control" type="text" name="longitud" disabled value="" ngModel required>
+                            <input class="form-control" type="text" name="longitud" disabled [(ngModel)]="longitud" required>
                         </div>
                     </div>
 
                     <div class="mapa">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2502.654313728046!2d-104.65675913318806!3d24.06642102622932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x869bb620c91b0d71%3A0x8f6d9ce204c9ee63!2sC-5%20Centro%20de%20Coordinaci%C3%B3n%20y%20C%C3%A1maras!5e0!3m2!1ses-419!2smx!4v1572143868247!5m2!1ses-419!2smx"
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2502.654313728046!2d-104.6533318806!3d24.02772622932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x869bb620c91b0d71%3A0x8f6d9ce204c9ee63!2sC-5%20Centro%20de%20Coordinaci%C3%B3n%20y%20C%C3%A1maras!5e0!3m2!1ses-419!2smx!4v1572143868247!5m2!1ses-419!2smx"
                             width="100%" height="90%" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
                     </div>
 
