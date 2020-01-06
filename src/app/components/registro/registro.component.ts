@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { RegistroComerciosService } from '../../services/registro-comercios.service';
+import { LocalidadesService } from '../../services/localidades.service';
 
 @Component({
   selector: 'app-registro',
@@ -9,11 +11,10 @@ import Swal from 'sweetalert2';
 })
 export class RegistroComponent implements OnInit {
 
-  // expresionReg = "^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$";
   campoRequerido = "Este campo es requerido";
 
-  usuario: Usuario = {
-    nombreUsuario: null
+  usuario = {
+    nombre_comercio: null
   }
 
   sexos = [
@@ -29,28 +30,12 @@ export class RegistroComponent implements OnInit {
     }
   ];
   selectedSexo = 0;
-  valorSexo = 'S';
+  sexo_app = 'S';
 
   estado = [
     {
       id_estados: 1,
       nombre_estado: 'Durango'
-    },
-    {
-      id_estados: 2,
-      nombre_estado: 'Mazatlan'
-    },
-    {
-      id_estados: 3,
-      nombre_estado: 'Monterrey'
-    },
-    {
-      id_estados: 4,
-      nombre_estado: 'Aguascalientes'
-    },
-    {
-      id_estados: 5,
-      nombre_estado: 'Guadalajara'
     }
   ];
   municipio = [
@@ -58,27 +43,7 @@ export class RegistroComponent implements OnInit {
       id_municipios: 1,
       estado_id: 5,
       nombre_municipio: 'Jalisco'
-    },
-    {
-      id_municipios: 2,
-      estado_id: 4,
-      nombre_municipio: 'Aguascalientes'
-    },
-    {
-      id_municipios: 3,
-      estado_id: 3,
-      nombre_municipio: 'Nuevo Leon'
-    },
-    {
-      id_municipios: 4,
-      estado_id: 2,
-      nombre_municipio: 'Sinaloa'
-    },
-    {
-      id_municipios: 5,
-      estado_id: 1,
-      nombre_municipio: 'Durango'
-    },
+    }
   ];
   localidad = [
     {
@@ -87,35 +52,7 @@ export class RegistroComponent implements OnInit {
       nombre_localidad: 'De Durango',
       lat: 24.0277,
       lng: -104.653
-    },
-    {
-      id_localidades: 2,
-      municipio_id: 4,
-      nombre_localidad: 'De Sinaloa',
-      lat: 25.1533,
-      lng: -108.1732
-    },
-    {
-      id_localidades: 3,
-      municipio_id: 3,
-      nombre_localidad: 'De NL',
-      lat: 25.6714,
-      lng: -100.309
-    },
-    {
-      id_localidades: 4,
-      municipio_id: 2,
-      nombre_localidad: 'De Aguasc',
-      lat: 21.8818,
-      lng: -102.291
-    },
-    {
-      id_localidades: 5,
-      municipio_id: 1,
-      nombre_localidad: 'De Jalisco',
-      lat: 20.6736,
-      lng: -103.344
-    },
+    }
   ];
 
   // 
@@ -130,13 +67,40 @@ export class RegistroComponent implements OnInit {
   latitud = 0;
   longitud = 0 ;
 
-  constructor() { }
+  folio_comercio = 0;
+
+  constructor( private _registroComercio: RegistroComerciosService,
+               private _getLocalidades: LocalidadesService) { 
+  
+  // TRAER LA LISTA DE ESTADOS, MUNICIPIOS Y LOCALIDADES
+  this.getEstMunLoc();
+  this.folio_comercio = new Date().getTime();
+                 
+  }
 
   ngOnInit() {
   }
 
+  getEstMunLoc(){
+    this._getLocalidades.getEstados().subscribe( (estados: any) => {
+      if(estados.ok){
+        this.estado = estados.estados;
+      }
+    });
+    this._getLocalidades.getMunicipios().subscribe( (municipios: any) => {
+      if(municipios.ok){
+        this.municipio = municipios.municipios;
+      }
+    });
+    this._getLocalidades.getLocalidades().subscribe( (localidades: any) => {
+      if(localidades.ok){
+        this.localidad = localidades.localidades;
+      }
+    });
+  }
+
   registrar(forma: NgForm){
-    // console.log(forma);
+
     if( this.selectedLocalidades === 0){
       Swal.fire({
         icon: 'error',
@@ -145,7 +109,7 @@ export class RegistroComponent implements OnInit {
       });
       return;
     }
-    if(this.valorSexo === 'S'){
+    if(this.sexo_app === 'S'){
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -162,13 +126,45 @@ export class RegistroComponent implements OnInit {
       return;
     }
 
-    if(forma.valid && this.selectedLocalidades!=0 && this.valorSexo!= 'S'){
-      Swal.fire({
-        icon: 'success',
-        title: 'Éxito',
-        text: 'Comercio registrado correctamente'
-      });
-    } 
+    if(forma.valid && this.selectedLocalidades!=0 && this.sexo_app!= 'S'){
+
+      let data_comercio = forma.control.value;
+      data_comercio.lat_dir = this.latitud;
+      data_comercio.lgn_dir = this.longitud;
+      data_comercio.id_localidad = this.selectedLocalidades;
+      data_comercio.sexo_app = this.sexo_app;
+      data_comercio.folio_comercio = this.folio_comercio;
+  
+      console.log(forma);
+  
+      this._registroComercio.addComercioCompleto(data_comercio).subscribe((res: any) => {
+        // console.log(res);
+        if(res.ok){
+          Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: 'Comercio registrado correctamente'
+          });
+          return;
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ocurrió un error al registrar comercio',
+            text: res.error.sqlMessage
+          });
+          console.log(res.error);
+          return;
+        }
+      }, err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrió un error',
+          text: `Validar que esté bien escrita la información por favor.`
+        });
+        console.log(err);
+        return;
+      })
+    }
 
   }
 
@@ -211,16 +207,17 @@ export class RegistroComponent implements OnInit {
       this.latitud = loc[0].lat;
       this.longitud = loc[0].lng;
     }
+    // console.log();
   }
 
   onSelectSexo(sexo: number){
     this.selectedSexo = sexo;
-    this.valorSexo = 'S';
+    this.sexo_app = 'S';
     const sex: any = this.sexos.filter((sexo)=>{
       return sexo.id === Number(this.selectedSexo);
     })
     if(sex.length>=1){
-      this.valorSexo = sex[0].valor;
+      this.sexo_app = sex[0].valor;
     }
   }
 

@@ -14,9 +14,9 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label ">Nombre Comercio<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <input class="form-control" type="text" name="nombreComercio" [(ngModel)]="usuario.nombreUsuario" required #nombreUsuario="ngModel" [ngClass]="{'is-invalid': 
-                                (nombreUsuario.touched && (nombreUsuario.errors?.required))}">
-                            <div *ngIf="nombreUsuario.errors?.required" class="invalid-feedback">
+                            <input class="form-control" type="text" name="nombre_comercio" [(ngModel)]="usuario.nombre_comercio" required #nombre_comercio="ngModel" [ngClass]="{'is-invalid': 
+                                (nombre_comercio.touched && (nombre_comercio.errors?.required))}">
+                            <div *ngIf="nombre_comercio.errors?.required" class="invalid-feedback">
                                 {{campoRequerido}}
                             </div>
                         </div>
@@ -24,8 +24,8 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Razón Social<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <input class="form-control" type="text" name="razonSocial" ngModel required #razonSocial="ngModel" [ngClass]="{'is-invalid': (razonSocial.touched && (razonSocial.errors?.required)) }">
-                            <div *ngIf="razonSocial.errors?.required" class="invalid-feedback">
+                            <input class="form-control" type="text" name="razon_social" ngModel required #razon_social="ngModel" [ngClass]="{'is-invalid': (razon_social.touched && (razon_social.errors?.required)) }">
+                            <div *ngIf="razon_social.errors?.required" class="invalid-feedback">
                                 {{campoRequerido}}
                             </div>
                         </div>
@@ -42,11 +42,11 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Teléfono fijo </label>
                         <div class="col-8">
-                            <input class="form-control" type="text" name="telefonoFijo" ngModel minlength="10" maxlength="10" [ngClass]="{'is-invalid': (telefonoFijo.touched && (telefonoFijo.errors?.minlength || telefonoFijo.errors?.maxlength)) }" #telefonoFijo="ngModel">
-                            <div *ngIf="telefonoFijo.errors?.minlength" class="invalid-feedback">
+                            <input class="form-control" type="text" name="telefono_fijo" ngModel minlength="10" maxlength="10" [ngClass]="{'is-invalid': (telefono_fijo.touched && (telefono_fijo.errors?.minlength || telefono_fijo.errors?.maxlength)) }" #telefono_fijo="ngModel">
+                            <div *ngIf="telefono_fijo.errors?.minlength" class="invalid-feedback">
                                 Al menos 10 dígitos
                             </div>
-                            <div *ngIf="telefonoFijo.errors?.maxlength" class="invalid-feedback">
+                            <div *ngIf="telefono_fijo.errors?.maxlength" class="invalid-feedback">
                                 Máximo 10 dígitos
                             </div>
                         </div>
@@ -54,13 +54,14 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Núm empleados</label>
                         <div class="col-8">
-                            <input class="form-control" type="number" name="numEmpleados" ngModel>
+                            <input class="form-control" type="number" name="num_empleados" ngModel>
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
-                        <label class="col-4 col-form-label">Folio Comercio</label>
+                        <label class="col-4 col-form-label">Código Activación</label>
+                        <!-- <label class="col-4 col-form-label">Folio Comercio</label> -->
                         <div class="col-8">
-                            <input class="form-control" type="text" name="folioComercio" ngModel>
+                            <input class="form-control" type="text" name="folio_comercio" disabled [(ngModel)]="this.folio_comercio">
                         </div>
                     </div>
 
@@ -115,13 +116,13 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Entre Calle</label>
                         <div class="col-8">
-                            <input class="form-control" type="text" name="entreCalle1" ngModel>
+                            <input class="form-control" type="text" name="entre_calle_1" ngModel>
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Y Calle</label>
                         <div class="col-8">
-                            <input class="form-control" type="text" name="entreCalle2" ngModel>
+                            <input class="form-control" type="text" name="entre_calle_2" ngModel>
                         </div>
                     </div>
                     <div class="form-group row justify-content-between">
@@ -166,14 +167,14 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Localidad<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <select *ngIf="filtro_localidades" [(ngModel)]="selectedLocalidades" (change)="onSelectLocalidad($event.target.value)" class="form-control my-1" name="localidad"> 
+                            <select *ngIf="filtro_localidades" [(ngModel)]="selectedLocalidades" (change)="onSelectLocalidad($event.target.value)" class="form-control my-1" name="id_localidad"> 
                                 <option value="0">Seleccione</option>
                                 <option *ngFor="let loc of filtro_localidades"
                                     value="{{loc.id_localidades}}">
                                     {{loc.nombre_localidad}}
                                 </option>
                             </select>
-                            <div *ngIf="forma.control.value.localidad === '0' && forma.controls.localidad.untouched === false">
+                            <div *ngIf="forma.control.value.id_localidad === '0' && forma.controls.id_localidad.untouched === false">
                                 <small class="text-danger">{{campoRequerido}}</small>
                             </div>
                         </div>
@@ -192,8 +193,8 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Nombre(s)<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <input [ngClass]="{'is-invalid': (nombreUsuario.touched && (nombreUsuario.errors?.required)) }" class="form-control" type="text" name="nombreUsuario" ngModel required #nombreUsuario="ngModel">
-                            <div *ngIf="nombreUsuario.errors?.required" class="invalid-feedback">
+                            <input [ngClass]="{'is-invalid': (nombres_usuarios_app.touched && (nombres_usuarios_app.errors?.required)) }" class="form-control" type="text" name="nombres_usuarios_app" ngModel required #nombres_usuarios_app="ngModel">
+                            <div *ngIf="nombres_usuarios_app.errors?.required" class="invalid-feedback">
                                 {{campoRequerido}}
                             </div>
                         </div>
@@ -201,8 +202,8 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Apellido Paterno<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <input [ngClass]="{'is-invalid': (apellidoPaterno.touched && (apellidoPaterno.errors?.required)) }" class="form-control" type="text" name="apellidoPaterno" ngModel required #apellidoPaterno="ngModel">
-                            <div *ngIf="apellidoPaterno.errors?.required" class="invalid-feedback">
+                            <input [ngClass]="{'is-invalid': (apell_pat.touched && (apell_pat.errors?.required)) }" class="form-control" type="text" name="apell_pat" ngModel required #apell_pat="ngModel">
+                            <div *ngIf="apell_pat.errors?.required" class="invalid-feedback">
                                 {{campoRequerido}}
                             </div>
                         </div>
@@ -210,8 +211,8 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Apellido Materno<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <input [ngClass]="{'is-invalid': (apellidoMaterno.touched && (apellidoMaterno.errors?.required)) }" class="form-control" type="text" name="apellidoMaterno" ngModel required #apellidoMaterno="ngModel">
-                            <div *ngIf="apellidoMaterno.errors?.required" class="invalid-feedback">
+                            <input [ngClass]="{'is-invalid': (apell_mat.touched && (apell_mat.errors?.required)) }" class="form-control" type="text" name="apell_mat" ngModel required #apell_mat="ngModel">
+                            <div *ngIf="apell_mat.errors?.required" class="invalid-feedback">
                                 {{campoRequerido}}
                             </div>
                         </div>
@@ -235,7 +236,7 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Fecha Nacimiento<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <input class="form-control " [ngClass]="{'is-invalid': (fechaNac.touched && (fechaNac.errors?.pattern || fechaNac.errors?.required)) }" type="text" placeholder="DD/MM/YYYY" name="fechaNacimiento" minlength="10" maxlength="10" ngModel #fechaNac="ngModel"
+                            <input class="form-control " [ngClass]="{'is-invalid': (fechaNac.touched && (fechaNac.errors?.pattern || fechaNac.errors?.required)) }" type="text" placeholder="DD/MM/YYYY" name="fecha_nacimiento" minlength="10" maxlength="10" ngModel #fechaNac="ngModel"
                                 required pattern="^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$">
                             <div *ngIf="fechaNac.errors?.required && fechaNac.touched" class="invalid-feedback">
                                 Este campo es requerido
@@ -255,15 +256,14 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Teléfono móvil<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <input class="form-control" [ngClass]="{'is-invalid': (telefonoMovil.touched && (telefonoMovil.errors?.required || telefonoMovil.errors?.maxlength || telefonoMovil.errors?.minlength)) }" type="text" name="telefonoMovil" ngModel minlength="10" maxlength="10"
-                                required #telefonoMovil="ngModel">
-                            <div *ngIf="telefonoMovil.errors?.required" class="invalid-feedback">
+                            <input class="form-control" [ngClass]="{'is-invalid': (tel_movil.touched && (tel_movil.errors?.required || tel_movil.errors?.maxlength || tel_movil.errors?.minlength)) }" type="text" name="tel_movil" ngModel minlength="10" maxlength="10" required #tel_movil="ngModel">
+                            <div *ngIf="tel_movil.errors?.required" class="invalid-feedback">
                                 {{campoRequerido}}
                             </div>
-                            <div *ngIf="telefonoMovil.errors?.minlength" class="invalid-feedback">
+                            <div *ngIf="tel_movil.errors?.minlength" class="invalid-feedback">
                                 Al menos 10 dígitos
                             </div>
-                            <div *ngIf="telefonoMovil.errors?.maxlength" class="invalid-feedback">
+                            <div *ngIf="tel_movil.errors?.maxlength" class="invalid-feedback">
                                 Máximo 10 dígitos
                             </div>
                         </div>
@@ -285,7 +285,7 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Tipo de Sangre</label>
                         <div class="col-8">
-                            <input class="form-control" type="text" name="tipoSangre" ngModel>
+                            <input class="form-control" type="text" name="tipo_sangre" ngModel>
                         </div>
                     </div>
                     <!-- </form> -->
@@ -312,7 +312,7 @@
                         </div>
                     </div>
 
-                    <!--   -->
+                    <!--  latitud != 0 && longitud !=0 -->
                     <div class="mapa mb-5" *ngIf="latitud != 0 && longitud !=0">
                         <agm-map (mapClick)="agregarMarcador($event)" [latitude]="latitud" [longitude]="longitud" [zoom]="15">
                             <agm-marker [latitude]="latitud" [longitude]="longitud">
