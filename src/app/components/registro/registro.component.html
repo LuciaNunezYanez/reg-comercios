@@ -1,7 +1,14 @@
 <div class="container-fluid">
 
     <form novalidate="" (ngSubmit)="registrar(forma)" #forma="ngForm">
+        <div>
+            <h3 class="h3 text-center pt-3 text-info">Registrar nuevo comercio</h3>
+        </div>
+
         <div class="row justify-content-around pt-4 pb-4">
+
+
+
 
             <div class="card col-md-5 col-sm-12" style="width: 18rem;">
                 <div class="card-body">
@@ -101,7 +108,7 @@
                     <div class="form-group row justify-content-between">
                         <label class="col-4 col-form-label">Código Postal<span class="text-danger">*</span></label>
                         <div class="col-8">
-                            <input class="form-control" [ngClass]="{'is-invalid': (cp.touched && (cp.errors?.required || cp.errors?.minlength || cp.errors?.maxlength )) }" type="text" name="cp" ngModel required minlength="5" maxlength="5" #cp="ngModel">
+                            <input class="form-control" [ngClass]="{'is-invalid': (cp.touched && (cp.errors?.required || cp.errors?.minlength || cp.errors?.maxlength )) }" type="number" name="cp" ngModel required minlength="5" maxlength="5" #cp="ngModel">
                             <div *ngIf="cp.errors?.required" class="invalid-feedback">
                                 {{campoRequerido}}
                             </div>
