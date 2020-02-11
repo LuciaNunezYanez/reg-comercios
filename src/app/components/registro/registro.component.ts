@@ -128,12 +128,18 @@ export class RegistroComponent implements OnInit {
 
     if(forma.valid && this.selectedLocalidades!=0 && this.sexo_app!= 'S'){
 
+      // INFORMACION DE LA DIRECCION, COMERCIO Y USUARIO
       let data_comercio = forma.control.value;
       data_comercio.lat_dir = this.latitud;
       data_comercio.lgn_dir = this.longitud;
       data_comercio.id_localidad = this.selectedLocalidades;
       data_comercio.sexo_app = this.sexo_app;
       data_comercio.folio_comercio = this.folio_comercio;
+
+      // INFORMACION ESPECIFICA DEL CODIGO DE ACTIVACIÓN
+      var fechaHoy = new Date();
+      data_comercio.fecha_creacion = fechaHoy.getDate() + "/" + (fechaHoy.getMonth() + 1) + "/" + fechaHoy.getFullYear();
+      data_comercio.id_usuario_nit = 20;
   
       console.log(forma);
   
